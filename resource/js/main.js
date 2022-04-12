@@ -245,7 +245,7 @@ var app = new Vue({
                         this.page_CpList = true;
 
                     }
-                    else if ("Cassone" in loadFileData[0]) {
+                    else if ("Cassone" in loadFileData[0]) { //Il file più recente
                         
                         this.selectedFile_name = selectedFile.name + " - v0.3";
 
