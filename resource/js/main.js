@@ -185,6 +185,9 @@ var app = new Vue({
                     this.selectedFile_name = selectedFile.name;
 
                     if ("CASARSID" in loadFileData[0] && "CEID" in loadFileData[0]) {
+                        
+                        this.selectedFile_name = selectedFile.name + " - v0.1";
+
                         loadFileData.forEach(row => {
                             if (this.CpList[row.CASARSID] == undefined) {
                                 this.CpList[row.CASARSID] = {
@@ -212,6 +215,9 @@ var app = new Vue({
                         this.page_CpList = true;
 
                     } else if ("Casars" in loadFileData[0]) {
+
+                        this.selectedFile_name = selectedFile.name + " - v0.2";
+                        
                         loadFileData.forEach(row => {
                             if (this.CpList[row["Casars"]] == undefined) {
                                 this.CpList[row["Casars"]] = {
@@ -237,6 +243,37 @@ var app = new Vue({
 
                         this.page_loadFile = false;
                         this.page_CpList = true;
+
+                    }
+                    else if ("Cassone" in loadFileData[0]) {
+                        
+                        this.selectedFile_name = selectedFile.name + " - v0.3";
+
+                        loadFileData.forEach(row => {
+                            if (this.CpList[row["Cassone"]] == undefined) {
+                                this.CpList[row["Cassone"]] = {
+                                    status: "OK",
+                                    CE: [],
+                                    CE_Error: [],
+                                    Result: [],
+                                };
+                            }
+    
+                            if (row["stato_rda"] == "ASSC" || row["Tipo"] == "ACQC" || row["Tipo"] == "RESC") {
+                                this.CpList[row["Cassone"]].status = "KO";
+                                this.CpList[row["Cassone"]].CE_Error.push(row["CE_CASSONE"]);
+                            }
+    
+                            this.CpList[row["Cassone"]].CE.push(row["CE_CASSONE"]);
+                        });
+    
+                        this.CpTable = [];
+                        Object.keys(this.CpList).forEach(element => {
+                            this.CpTable.push([element, this.CpList[element].status, this.CpList[element].CE.length, this.CpList[element].CE_Error.length, false, false]);
+                        });
+    
+                        this.page_loadFile = false;
+                        this.page_CpList = true;   
 
                     }
                     else {
