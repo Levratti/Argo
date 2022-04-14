@@ -81,6 +81,22 @@ var app = new Vue({
 
             this.sort = sorted;
         },
+        SorteTableN(sorted) { //al posto di ataddare il SORT si potrebbe prima convertire CpList in un array, cosi da filtrare in pase al index della colona
+
+            if (Math.abs(sorted) == this.sort) {
+                this.CpTable = this.CpTable.reverse();
+                this.sort *= -1;
+                return;
+            }
+
+            this.CpTable = this.CpTable.sort(function (a, b) {
+                var A = a[Math.abs(sorted) - 1];
+                var B = b[Math.abs(sorted) - 1];
+                return A - B
+            });
+
+            this.sort = sorted;
+        },
         // diff between just two arrays:
         arrayDiff(a, b) {
             var arrays = Array.prototype.slice.call(arguments);
