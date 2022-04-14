@@ -259,7 +259,7 @@ var app = new Vue({
                                 };
                             }
     
-                            if (row["stato_rda"] == "ASSC" || row["Tipo"] == "ACQC" || row["Tipo"] == "RESC") {
+                            if (row["stato_rda"] != "CON") { //|| row["Tipo"] == "ACQC" || row["Tipo"] == "RESC"
                                 this.CpList[row["Cassone"]].status = "KO";
                                 this.CpList[row["Cassone"]].CE_Error.push(row["CE_CASSONE"]);
                             }
